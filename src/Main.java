@@ -8,36 +8,46 @@ public class Main {
         int[] arrSix = {10,9,8,7,6,5,4,3,2,1};
         int[] arrSeven = {1,2,3,4,5,6,7,8,9,10};
 
-        System.out.println("1st lowest in One: " + getkthLowest(1, arrOne));
-        System.out.println("2nd lowest in One: " + getkthLowest(2, arrOne));
-        System.out.println("3rd lowest in One: " + getkthLowest(3, arrOne));
+        System.out.println("1st lowest in One: \nExpected: 1    Actual: " + getkthLowest(1, arrOne, arrOne.length));
+        System.out.println("2nd lowest in One: \nExpected: 2    Actual: " + getkthLowest(2, arrOne, arrOne.length));
+        System.out.println("3rd lowest in One: \nExpected: 3    Actual: " + getkthLowest(3, arrOne, arrOne.length));
 
-        System.out.println("1st lowest in Two: " + getkthLowest(1, arrTwo));
-        System.out.println("2nd lowest in Two: " + getkthLowest(2, arrTwo));
-        System.out.println("3rd lowest in Two: " + getkthLowest(3, arrTwo));
+        System.out.println("1st lowest in Two: \nExpected: 1    Actual: " + getkthLowest(1, arrTwo, arrTwo.length));
+        System.out.println("2nd lowest in Two: \nExpected: 2    Actual: " + getkthLowest(2, arrTwo, arrTwo.length));
+        System.out.println("3rd lowest in Two: \nExpected: 3    Actual: " + getkthLowest(3, arrTwo, arrTwo.length));
 
-        System.out.println("1st lowest in Three: " + getkthLowest(1, arrThree));
-        System.out.println("2nd lowest in Three: " + getkthLowest(2, arrThree));
-        System.out.println("3rd lowest in Three: " + getkthLowest(3, arrThree));
+        System.out.println("1st lowest in Three: \nExpected: 0    Actual: " + getkthLowest(1, arrThree, arrThree.length));
+        System.out.println("2nd lowest in Three: \nExpected: 1    Actual: " + getkthLowest(2, arrThree, arrThree.length));
+        System.out.println("3rd lowest in Three: \nExpected: 2    Actual: " + getkthLowest(3, arrThree, arrThree.length));
 
-        System.out.println("1st lowest in Four: " + getkthLowest(1, arrFour));
-        System.out.println("2nd lowest in Four: " + getkthLowest(2, arrFour));
-        System.out.println("3rd lowest in Four: " + getkthLowest(3, arrFour));
+        System.out.println("1st lowest in Four: \nExpected: 0    Actual: " + getkthLowest(1, arrFour, arrFour.length));
+        System.out.println("2nd lowest in Four: \nExpected: 1    Actual: " + getkthLowest(2, arrFour, arrFour.length));
+        System.out.println("3rd lowest in Four: \nExpected: 2    Actual: " + getkthLowest(3, arrFour, arrFour.length));
 
-        System.out.println("1st lowest in Five: " + getkthLowest(1, arrFive));
-        System.out.println("2nd lowest in Five: " + getkthLowest(2, arrFive));
-        System.out.println("3rd lowest in Five: " + getkthLowest(3, arrFive));
+        System.out.println("1st lowest in Five: \nExpected: 1    Actual: " + getkthLowest(1, arrFive, arrFive.length));
+        System.out.println("2nd lowest in Five: \nExpected: 2    Actual: " + getkthLowest(2, arrFive, arrFive.length));
+        System.out.println("3rd lowest in Five: \nExpected: 3    Actual: " + getkthLowest(3, arrFive, arrFive.length));
 
-        System.out.println("1st lowest in Six: " + getkthLowest(1, arrSix));
-        System.out.println("2nd lowest in Six: " + getkthLowest(2, arrSix));
-        System.out.println("3rd lowest in Six: " + getkthLowest(3, arrSix));
+        System.out.println("1st lowest in Six: \nExpected: 1    Actual: " + getkthLowest(1, arrSix, arrSix.length));
+        System.out.println("2nd lowest in Six: \nExpected: 2    Actual: " + getkthLowest(2, arrSix, arrSix.length));
+        System.out.println("3rd lowest in Six: \nExpected: 3    Actual: " + getkthLowest(3, arrSix, arrSix.length));
 
-        System.out.println("1st lowest in Seven: " + getkthLowest(1, arrSeven));
-        System.out.println("2nd lowest in Seven: " + getkthLowest(2, arrSeven));
-        System.out.println("3rd lowest in Seven: " + getkthLowest(3, arrSeven));
+        System.out.println("1st lowest in Seven: \nExpected: 1    Actual: " + getkthLowest(1, arrSeven, arrSeven.length));
+        System.out.println("2nd lowest in Seven: \nExpected: 2    Actual: " + getkthLowest(2, arrSeven, arrSeven.length));
+        System.out.println("3rd lowest in Seven: \nExpected: 3    Actual: " + getkthLowest(3, arrSeven, arrSeven.length));
     }
 
-    private static int getkthLowest(int k, int[] arr) {
+    /**
+     * This function returns the kth lowest number in the array
+     * @param k - the lowest number wanted
+     * @param arr - the array to search
+     * @return - the kth lowest number
+     */
+    private static int getkthLowest(int k, int[] arr, int arrayLength) {
+        if (arr.length == 0) {
+            throw new IllegalArgumentException("Array is empty");
+        }
+
         int pivot = arr[0];
 
         int[] lower = new int[arr.length];
@@ -46,42 +56,22 @@ public class Main {
         int lowerLength = 0;
         int higherLength = 0;
 
-        for(int j : arr) {
-            if (j < pivot) {
-                lower[lowerLength] = j;
+        for(int i = 0; i < arrayLength; i++) {
+            if (arr[i] < pivot) {
+                lower[lowerLength] = arr[i];
                 lowerLength++;
-            } else if (j > pivot) {
-                higher[higherLength] = j;
+            } else if (arr[i] > pivot) {
+                higher[higherLength] = arr[i];
                 higherLength++;
             }
         }
 
-        if(lowerLength == k){
-            return getHighest(lower);
-        } else if (lowerLength < k) {
-            return getLowest(higher);
+        if(lowerLength == k - 1){
+            return pivot;
+        } else if (lowerLength > k - 1) {
+            return getkthLowest(k, lower, lowerLength);
+        } else {
+            return getkthLowest(k - lowerLength - 1, higher, higherLength);
         }
-        return getkthLowest(k, lower);
     }
-
-    private static int getHighest(int[] arr) {
-        int highest = arr[0];
-        for(int i = 1; i < arr.length; i++) {
-            if(arr[i] > highest) {
-                highest = arr[i];
-            }
-        }
-        return highest;
-    }
-
-    private static int getLowest(int[] arr) {
-        int lowest = arr[0];
-        for(int i = 1; i < arr.length; i++) {
-            if(arr[i] < lowest) {
-                lowest = arr[i];
-            }
-        }
-        return lowest;
-    }
-
 }
