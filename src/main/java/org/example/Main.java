@@ -1,6 +1,9 @@
 package org.example;
 
+import java.util.Random;
+
 public class Main {
+    final static Random rand = new Random();
     public static void main(String[] args) {
         int[] arrOne = {1, 2, 3, 4, 5};
 //        int[] arrTwo = {5,7,4, 2,1,3,6};
@@ -45,18 +48,19 @@ public class Main {
      * @param arr - the array to search
      * @return - the kth lowest number
      */
-    public int getkthLowest(int k, int[] arr, int arrayLength) {
+    public static int getkthLowest(int k, int[] arr, int arrayLength) {
         if (arr.length == 0) {
             throw new IllegalArgumentException("Array is empty");
         }
 
-        int pivot = arr[0];
+        int pivot = arr[rand.nextInt(arr.length)];
 
         int[] lower = new int[arr.length];
         int[] higher = new int[arr.length];
 
         int lowerLength = 0;
         int higherLength = 0;
+        int pivotCount = 0;
 
         for(int i = 0; i < arrayLength; i++) {
             if (arr[i] < pivot) {
@@ -65,15 +69,17 @@ public class Main {
             } else if (arr[i] > pivot) {
                 higher[higherLength] = arr[i];
                 higherLength++;
+            } else {
+                pivotCount++;
             }
         }
 
-        if(lowerLength == k - 1){
-            return pivot;
-        } else if (lowerLength > k - 1) {
+        if (lowerLength >= k) {
             return getkthLowest(k, lower, lowerLength);
+        } else if (lowerLength + pivotCount >= k) {
+            return pivot;
         } else {
-            return getkthLowest(k - lowerLength - 1, higher, higherLength);
+            return getkthLowest(k - lowerLength - pivotCount, higher, higherLength);
         }
     }
 }
